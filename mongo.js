@@ -4,6 +4,7 @@ var connectionString = process.env.CURATES_DB_URI || process.env.WERCKER_MONGODB
 var mongoose = require('mongoose');
 mongoose.connect(connectionString);
 var db = mongoose.connection;
+var bCrypt = require('bcrypt-nodejs');
 
 // Attach useful listeners to the database
 db.on('error', function(error) {
@@ -57,7 +58,7 @@ var collectionSchema = new mongoose.Schema({
 var Collection = mongoose.model('Collection', collectionSchema);
 
 // Used to retrieve only these fields in some queries
-var metaFields = '_id title url user description stars';
+var metaFields = '_id title url description stars';
 
 // mongo will be exported. This is the interface for using the database.
 var mongo = {};
@@ -76,7 +77,8 @@ mongo.create = function(coll) {
   // Sets the url if it not already set
   // Should this even be an option? maybe it should require the
   // url to be set here?
-  
+  coll.userId = bCrypt.hashSync(req.user.id);
+
   coll.url = mongo.mapTitleToUrl(coll.title);
   
   // Check that url is unique
@@ -189,10 +191,13 @@ mongo.getAllCollections = function() {
 // Returns a promise that resolves to an array of objects, each
 // containing the meta data of all the collections created by the
 // given user
-mongo.getUserCollections = function(user) {
+mongo.getUserCollections = function() {
+  var hash = bCrypt.hashSync(req.user.id);
   return Collection.find({
-    'user.id': user.id
+    userId: hash
   }, metaFields).exec();
 };
+
+
 
 module.exports = mongo;
