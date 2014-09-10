@@ -1,5 +1,5 @@
 // Establish connection with the server
-var connectionString = process.env.CURATES_DB_URI || process.env.WERCKER_MONGODB_URL;
+var connectionString = process.env.CURATES_DB_URI || process.env.WERCKER_MONGODB_URL || 'mongodb://localhost/curates';
 
 var mongoose = require('mongoose');
 mongoose.connect(connectionString);
@@ -81,9 +81,9 @@ mongo.create = function(coll) {
   // Sets the url if it not already set
   // Should this even be an option? maybe it should require the
   // url to be set here?
-  if (!coll.url) {
-    coll.url = mongo.mapTitleToUrl(coll.title);
-  }
+  
+  coll.url = mongo.mapTitleToUrl(coll.title);
+  
   // Check that url is unique
   return mongo.findByUrl(coll.url).then(function(collection) {
     if (collection) return null;
@@ -196,7 +196,6 @@ mongo.getAllCollections = function() {
 // given user
 mongo.getUserCollections = function(user) {
   return Collection.find({
-    'user.provider': user.provider,
     'user.id': user.id
   }, metaFields).exec();
 };

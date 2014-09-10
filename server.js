@@ -64,11 +64,8 @@ app.get('/api/collection/:url', function(req, res) {
 });
 
 // retrieve the meta data for all of a users collections
-app.get('/api/user/:userProvider/:userId', function(req, res) {
-  var user = {
-    provider: req.params.userProvider,
-    id: req.params.userId
-  };
+app.get('/api/user/', function(req, res) {
+  var user = req.user;
   mongo.getUserCollections(user).then(function(collections) {
     res.end(JSON.stringify(collections));
   });
