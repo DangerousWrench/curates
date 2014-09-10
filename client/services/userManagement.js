@@ -1,8 +1,22 @@
 angular.module('curates.services', [])
-.factory('userManagement', function() {
+.factory('userManagement', function($http) {
 
-  // var user = {};
-  // var loggedIn = false;
+  var getUser = function(){
+    return $http.get('/get-user');
+  }
+
+  var loggedIn = function(cb){
+    getUser().then(function(res){
+      var user = res.data.user;
+      console.log(user);
+      if(!!user){
+        console.log('true');
+        return cb(true);
+      } else {
+        return cb(false);
+      }
+    });
+  };
   // var initUser = function() {
   //   user.givenName = '';
   //   user.id = '';
@@ -20,20 +34,30 @@ angular.module('curates.services', [])
   // var logout = function() {
   //   initUser();
   // };
-  // var validateUser = function(target) {
-  //   return target.provider === user.provider && target.id === user.id
-  // };
+  var validateUser = function(userId) {
+    console.log(userId);
+    getUser().then(function(response){
+      console.log(userId === response.data.user);
+      return userId === response.data.user;  
+    })
+  };
    return {
-  //   user: user,
-  //   loggedIn: loggedIn,
+       getUser: getUser,
+       loggedIn: loggedIn,
   //   login: login,
   //   logout: logout,
-  //   validateUser: validateUser
+       validateUser: validateUser
    };
 })
-.controller('userMangamentController', function($scope, userManagement) {
+.controller('userManagementController', function($scope, userManagement) {
   // $scope.user = userManagement.user;
-  // $scope.loggedIn = userManagement.loggedIn;
+   $scope.loggedIn;
+   var log = function(){
+    userManagement.loggedIn(function(status){
+      $scope.loggedIn = status;
+    });
+   }
+   log();
   // $scope.login = function(name) {
   //   userManagement.loggedIn = true;
   //   $scope.loggedIn = true;

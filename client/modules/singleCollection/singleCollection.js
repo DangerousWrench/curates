@@ -16,9 +16,11 @@ angular.module('curates.singleCollection', [])
 
   collectionFactory.getCollection(url).then(function(collection) {
     if (collection != null) {
-      $scope.isUser =
-        (userManagement.user.id === collection.user.id &&
-         userManagement.user.provider === collection.user.provider);
+      $scope.isUser;
+      userManagement.getUser().then(function(response){
+        var user = response.data.user;
+        $scope.isUser = (user === collection.userId)
+      });
       $scope.collection = collection;
     }
   });

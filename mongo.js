@@ -4,7 +4,7 @@ var connectionString = process.env.CURATES_DB_URI || process.env.WERCKER_MONGODB
 var mongoose = require('mongoose');
 mongoose.connect(connectionString);
 var db = mongoose.connection;
-var bCrypt = require('bcrypt-nodejs');
+// var bCrypt = require('bcrypt-nodejs');
 
 // Attach useful listeners to the database
 db.on('error', function(error) {
@@ -73,11 +73,11 @@ mongo.mapTitleToUrl = function(title) {
 // If there is already a collection in the db with the same url,
 // returns null, else
 // Returns a promise
-mongo.create = function(coll) {
+mongo.create = function(coll, user) {
   // Sets the url if it not already set
   // Should this even be an option? maybe it should require the
   // url to be set here?
-  coll.userId = bCrypt.hashSync(req.user.id);
+  coll.userId = user;
 
   coll.url = mongo.mapTitleToUrl(coll.title);
   
@@ -191,10 +191,9 @@ mongo.getAllCollections = function() {
 // Returns a promise that resolves to an array of objects, each
 // containing the meta data of all the collections created by the
 // given user
-mongo.getUserCollections = function() {
-  var hash = bCrypt.hashSync(req.user.id);
+mongo.getUserCollections = function(user) {
   return Collection.find({
-    userId: hash
+    userId: user
   }, metaFields).exec();
 };
 

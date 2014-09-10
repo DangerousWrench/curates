@@ -8,11 +8,11 @@ angular.module('curates.myCollections', [])
   });
 })
 
-.controller('myCollectionsController', function($scope, $stateParams, collectionFactory, userManagement) {
-  var user = userManagement.user;
+.controller('myCollectionsController', function($scope, $stateParams, collectionFactory) {
   $scope.collections = [];
 
-  collectionFactory.getUserCollections(user).then(function(collections) {
+  collectionFactory.getUserCollections().then(function(collections) {
+    console.log(collections);
     $scope.collections = collections;
   });
 });

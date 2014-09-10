@@ -4,7 +4,8 @@ var session = require('express-session');
 var url = require('url');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
-var passport = require('passport')
+var passport = require('passport');
+var bCrypt = require('bcrypt-nodejs');
 var GoogleStrategy = require('passport-google').Strategy;
 var port = process.env.PORT || 3000;
 
@@ -31,7 +32,7 @@ passport.use(new GoogleStrategy({
     realm: 'http://localhost:3000/'
   },
   function(identifier, profile, done) {
-    var user = JSON.stringify({ id: identifier })
+    var user = { id: profile.emails[0].value }
     var err = null;
     done(err, user);
   }
@@ -54,10 +55,20 @@ app.get('/auth', passport.authenticate('google', {
   successRedirect: '/#/',
   failureRedirect: '/#/' }))
 
+app.get('/get-user', function(req, res){
+  var user;
+  if(req.user){
+    user = req.user.id;
+  } else {
+    user = false;
+  }
+  res.end(JSON.stringify({user: user}));
+})
+
 // add new collection endpoint
 // responds with null if collection can't be added
 app.post('/api/collection/create', function(req, res) {
-  mongo.create(req.body).then(function(collection) {
+  mongo.create(req.body, req.user.id).then(function(collection) {
     res.statusCode = 201;
     res.end(JSON.stringify(collection));
   });
@@ -97,7 +108,7 @@ app.get('/api/collection/:url', function(req, res) {
 
 // retrieve the meta data for all of a users collections
 app.get('/api/user/', function(req, res) {
-  var user = req.user;
+  var user = req.user.id;
   mongo.getUserCollections(user).then(function(collections) {
     res.end(JSON.stringify(collections));
   });
