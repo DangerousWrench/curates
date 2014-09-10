@@ -1,5 +1,5 @@
 // Establish connection with the server
-var connectionString = process.env.CURATES_DB_URI || process.env.WERCKER_MONGODB_URL;
+var connectionString = process.env.CURATES_DB_URI || process.env.WERCKER_MONGODB_URL || 'mongodb://localhost/curates';
 
 var mongoose = require('mongoose');
 mongoose.connect(connectionString);
@@ -24,13 +24,8 @@ var collectionSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  user: {
-    type: {
-      provider: String,
-      id: String,
-      fullName: String,
-      givenName: String
-    },
+  userId: {
+    type: String,
     required: true
   },
   description: {
