@@ -24,13 +24,8 @@ var collectionSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  user: {
-    type: {
-      provider: String,
-      id: String,
-      fullName: String,
-      givenName: String
-    },
+  userId: {
+    type: String,
     required: true
   },
   description: {
