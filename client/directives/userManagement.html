@@ -1,9 +1,6 @@
 <div class="userManagement">
   <div class="notLoggedIn" ng-if="!loggedIn">
-    <form id="signin" ng-submit="login(name)">
-      <input class="_input" placeholder="Username" type="text" ng-model="name" name="username">
-      <button class="_button" type="submit" name="submit">Sign In</button>
-    </form>
+    <a href="/auth/google">Sign In with Google</a>
   </div>
   <div class="loggedIn" ng-if="loggedIn">
     <form id="logout" ng-submit="logout()">
