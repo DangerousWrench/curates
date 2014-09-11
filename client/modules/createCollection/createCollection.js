@@ -11,8 +11,13 @@ angular.module('curates.createCollection', [])
 .controller('createCollectionController', function($scope, $state, $stateParams, userManagement, collectionFactory) {
   console.log("stateParams url: ", $stateParams.url);
   // Only loggedIn users can create collections
-  $scope.loggedIn = userManagement.loggedIn;
-
+  $scope.loggedIn;
+   var log = function(){
+    userManagement.loggedIn(function(status){
+      $scope.loggedIn = status;
+    });
+   }
+   log();
   // Initialize new collection
 
   var initialize = function() {
@@ -20,7 +25,7 @@ angular.module('curates.createCollection', [])
     //query database for data for that collection url
     //and pre-populate the new collection form with that data
     $scope.collection = {};
-    $scope.collection.user = userManagement.user;
+    $scope.collection.userId = userManagement.getUser();
     $scope.collection.links = [];
     $scope.collection.title = '';
     $scope.collection.description = '';

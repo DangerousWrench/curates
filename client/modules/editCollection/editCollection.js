@@ -16,10 +16,13 @@ angular.module('curates.editCollection', [])
   // Retrieve collection
   collectionFactory.getCollection($stateParams.collectionUrl).then(function(collection) {
     // Check that this is the current users collection
-    if (userManagement.validateUser(collection.user)) {
-      $scope.editable = true;
-      $scope.collection = collection;
-    }
+    userManagement.getUser().then(function(response){
+      var user = response.data.user;
+      $scope.editable = (collection.userId === user);
+      if($scope.editable){
+        $scope.collection = collection;
+      }
+    })
   });
 
   // Called when the form is submitted

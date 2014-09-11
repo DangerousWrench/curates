@@ -22,10 +22,10 @@ angular.module('curates.collectionFactory', [])
     });
   };
 
-  var getUserCollections = function(user) {
+  var getUserCollections = function() {
     return $http({
       method: 'GET',
-      url: '/api/user/' + user.provider + '/' + user.id
+      url: '/api/user/'
     }).then(function(response) {
       return response.data;
     });

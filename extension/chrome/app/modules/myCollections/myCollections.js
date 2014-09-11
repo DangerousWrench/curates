@@ -3,14 +3,17 @@ angular.module('curates.myCollections', [])
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
   .state('myCollections', {
-    url: '/myCollections',
-    templateUrl: 'modules/myCollections/myCollections.html'
+    url: '/',
+    templateUrl: 'modules/myCollections/myCollections.html',
+    controller: 'myCollectionsController'
   });
 })
 
-.controller('myCollectionsController', function($scope, $stateParams, collectionFactory, userManagement) {
-  var user = userManagement.user;
-  collectionFactory.getUserCollections(user).then(function(collections) {
+.controller('myCollectionsController', function($scope, $stateParams, collectionFactory) {
+  // var user = userManagement.user;
+  
+  
+  collectionFactory.getUserCollections().then(function(collections) {
     $scope.collections = collections;
   });
 });

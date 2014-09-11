@@ -1,6 +1,7 @@
 angular.module('curates.collectionFactory', [])
 .factory('collectionFactory', function($http){
-  var baseUrl = 'http://curates.azurewebsites.net';
+  // var baseUrl = 'http://curates.azurewebsites.net';
+  var baseUrl = 'http://localhost:3000'
   var getCollection = function(url) {
     return $http({
       method: 'GET',
@@ -25,7 +26,7 @@ angular.module('curates.collectionFactory', [])
   var getUserCollections = function(user) {
     return $http({
       method: 'GET',
-      url: baseUrl + '/api/user/' + user.provider + '/' + user.id
+      url: baseUrl + '/api/user/'
     }).then(function(response) {
       return response.data;
     });

@@ -18,6 +18,7 @@
   "homepage": "https://github.com/Next-Mars/curates",
   "dependencies": {
     "body-parser": "~1.6.6",
+    "bower": "^1.3.9",
     "chai": "^1.9.1",
     "cookie-parser": "~1.3.2",
     "express": "~4.8.6",
