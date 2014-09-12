@@ -10,6 +10,10 @@ a:visited {
   color: #DF691A;
 }
 
+input{
+  color:black;
+}
+
 body {
   font-family: Helvetica;
   font-weight: 400;

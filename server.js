@@ -114,6 +114,15 @@ app.get('/api/user/', function(req, res) {
   });
 });
 
+//
+app.post('/api/chrome/', function(req, res) {
+  var user = req.body.user;
+  console.log(req.body)
+  mongo.getUserCollections(user).then(function(collections) {
+    res.end(JSON.stringify(collections));
+  });
+});
+
 // retrieve the meta data for all collections
 app.get('/api/all', function(req, res) {
   mongo.getAllCollections().then(function(collections) {

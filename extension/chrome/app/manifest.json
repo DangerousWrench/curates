@@ -42,5 +42,5 @@
       "all_frames": false
     }
   ],
-  "permissions": ["tabs", "http://*.azurewebsites.com/", "https://*.azurewebsites.com/"]
+  "permissions": ["tabs", "http://*.azurewebsites.com/", "https://*.azurewebsites.com/", ""]
 }
