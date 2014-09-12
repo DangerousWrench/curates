@@ -31,6 +31,17 @@ angular.module('curates.collectionFactory', [])
       return response.data;
     });
   };
+  
+  var getChromeUserCollections = function(user) {
+    console.log(user)
+    return $http({
+      method: 'POST',
+      data: JSON.stringify({user: user}),
+      url: baseUrl + '/api/chrome/'
+    }).then(function(response) {
+      return response.data;
+    });
+  };
 
   var updateCollection = function(collection) {
     return $http({
@@ -52,12 +63,49 @@ angular.module('curates.collectionFactory', [])
     });
   }
 
+
+
+
+  var addLink = function(collection) {
+    console.log('addin a leenk: ', collection);
+    return $http({
+      method: 'POST',
+      url: baseUrl + '/api/collection/addLink',
+      data: collection
+    }).then(function(response) {
+      console.log('addin a lernk: ', response.data)
+      return response.data;
+    });
+  }
+
+
+  var getUser = function(){
+    return $http.get('/get-user');
+  }
+
+  var loggedIn = function(cb){
+    getUser().then(function(res){
+      var user = res.data.user;
+      console.log(user);
+      if(!!user){
+        console.log('true');
+        return cb(true);
+      } else {
+        return cb(false);
+      }
+    });
+  };
+
   return {
+    getChromeUserCollections: getChromeUserCollections,
     getCollection: getCollection,
     getListData: getListData,
+    addLink: addLink,
     getUserCollections: getUserCollections,
     updateCollection: updateCollection,
-    createCollection: createCollection
+    createCollection: createCollection,
+    loggedIn: loggedIn, 
+    getUser: getUser
   };
 
 })

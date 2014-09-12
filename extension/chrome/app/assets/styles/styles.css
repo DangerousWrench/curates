@@ -10,6 +10,10 @@ a:visited {
   color: #DF691A;
 }
 
+input{
+  color:black;
+}
+
 body {
   font-family: Helvetica;
   font-weight: 400;
@@ -352,9 +356,10 @@ body {
 }
 
 .logotext {
+  display:block;
   position: absolute;
-  left: 10%;
-  width: 39.19921875%;
+  width:80%;
+  margin:auto;
   min-height: 4.688rem;
   font-size: 1rem;
   font-weight: 400;

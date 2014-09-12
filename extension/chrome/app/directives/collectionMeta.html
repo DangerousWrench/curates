@@ -1,15 +1,12 @@
 <div class="collectionMeta">
   <div class="collection-box collection-box-1"></div>
   <div class="votes-user votes-user-2 clearfix">
-    <div class="votes-box votes-box-2 clearfix">
+    <button ng-click="addLink(collection._id)" class="votes-box votes-box-2 clearfix">
       <p class="votes-text votes-text-2">
-        <span>{{collection.stars}}</span>
-      </p>
-      <p class="vote-num">
-        <span>votes</span>
+        <span style="{font-size:60px;}"> + </span>
       </p>
       <p class="vote-label"></p>
-    </div>
+    </button>
     <p class="username username-3">
       <span>{{ collection.user.givenName }}</span>
     </p>

@@ -84,6 +84,7 @@ app.post('/api/collection/update', function(req, res) {
 
 // add a link to collection
 app.post('/api/collection/addlink', function(req, res) {
+  console.log(req.body)
   mongo.addLink(req.body).then(function(collection) {
     res.end(JSON.stringify(collection));
   });
@@ -109,6 +110,15 @@ app.get('/api/collection/:url', function(req, res) {
 // retrieve the meta data for all of a users collections
 app.get('/api/user/', function(req, res) {
   var user = req.user.id;
+  mongo.getUserCollections(user).then(function(collections) {
+    res.end(JSON.stringify(collections));
+  });
+});
+
+//
+app.post('/api/chrome/', function(req, res) {
+  var user = req.body.user;
+  console.log(req.body)
   mongo.getUserCollections(user).then(function(collections) {
     res.end(JSON.stringify(collections));
   });
