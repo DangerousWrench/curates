@@ -1,17 +1,18 @@
+ 
  <div class="userManagement">
   <div class="notLoggedIn" ng-if="!loggedIn">
-    <form ng-submit="logz()">
+    <p>Log in:</p>
+    <form ng-submit="logz(email)">
       <input ng-model="email">
     </form>
   </div>
-  <p>{{email}}</p>
   <div class="LoggedIn" ng-if="loggedIn">
-    <p>youz ready to go</p>
+    <p>Welcome, {{email}}!</p>
   </div>
 </div>
 
+
 <div ng-controller="myCollectionsController">
   <collection-meta ng-repeat="collection in collections" collection="collection" />
-</div>
-<h1> Goats are like mushrooms </h1>
-<h2>asdjkfgy asdljfg</h2>
+</div>  
+

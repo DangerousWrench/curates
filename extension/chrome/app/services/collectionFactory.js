@@ -63,6 +63,22 @@ angular.module('curates.collectionFactory', [])
     });
   }
 
+
+
+
+  var addLink = function(collection) {
+    console.log('addin a leenk: ', collection);
+    return $http({
+      method: 'POST',
+      url: baseUrl + '/api/collection/addLink',
+      data: collection
+    }).then(function(response) {
+      console.log('addin a lernk: ', response.data)
+      return response.data;
+    });
+  }
+
+
   var getUser = function(){
     return $http.get('/get-user');
   }
@@ -84,6 +100,7 @@ angular.module('curates.collectionFactory', [])
     getChromeUserCollections: getChromeUserCollections,
     getCollection: getCollection,
     getListData: getListData,
+    addLink: addLink,
     getUserCollections: getUserCollections,
     updateCollection: updateCollection,
     createCollection: createCollection,
